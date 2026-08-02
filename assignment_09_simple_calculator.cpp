@@ -1,75 +1,124 @@
-// =============================================================================
-// PROGRAMMING FUNDAMENTALS — Assignment 9
-// =============================================================================
-//
-// TASK: Console-Based Simple Calculator
-//
-// Build a calculator program that runs in the console and performs basic
-// arithmetic operations based on the user's input.
-//
-// -----------------------------------------------------------------------------
-// OPERATIONS YOUR CALCULATOR MUST SUPPORT
-// -----------------------------------------------------------------------------
-//
-//   1. Addition          ( + )    e.g.  10 + 3  =  13
-//   2. Subtraction       ( - )    e.g.  10 - 3  =  7
-//   3. Multiplication    ( * )    e.g.  10 * 3  =  30
-//   4. Division          ( / )    e.g.  10 / 3  =  3.33
-//   5. Modulus           ( % )    e.g.  10 % 3  =  1  (remainder)
-//   6. Exponentiation    ( ^ )    e.g.  2 ^ 8   =  256
-//   7. Quit
-//
-// -----------------------------------------------------------------------------
-// HOW THE MENU SHOULD LOOK
-// -----------------------------------------------------------------------------
-//
-//   ============================
-//        SIMPLE CALCULATOR
-//   ============================
-//   1. Addition
-//   2. Subtraction
-//   3. Multiplication
-//   4. Division
-//   5. Modulus
-//   6. Exponentiation
-//   7. Quit
-//   Select an operation (1-7):
-//
-// -----------------------------------------------------------------------------
-// EXPECTED INTERACTION EXAMPLE
-// -----------------------------------------------------------------------------
-//
-//   Select an operation (1-7): 4
-//   Enter first number : 10
-//   Enter second number: 3
-//   Result: 10 / 3 = 3.33
-//
-//   Select an operation (1-7): 4
-//   Enter first number : 5
-//   Enter second number: 0
-//   Error: Cannot divide by zero.
-//
-//   Select an operation (1-7): 7
-//   Goodbye!
-//
-// -----------------------------------------------------------------------------
-// REQUIREMENTS
-// -----------------------------------------------------------------------------
-// - Each arithmetic operation MUST be written as its own function.
-// - Use a loop so the calculator keeps running until the user selects Quit.
-// - Division by zero must be caught and handled with a clear error message
-//   (do NOT let the program crash).
-// - Use fixed and setprecision(2) to display results to 2 decimal places.
-// - Handle invalid menu choices gracefully.
-// - For exponentiation use a loop or the pow() function from <cmath>.
-//
-
-// =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
-// =============================================================================
-
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <limits>
 using namespace std;
 
+double add(double first, double second) {
+    return first + second;
+}
+
+double subtract(double first, double second) {
+    return first - second;
+}
+
+double multiply(double first, double second) {
+    return first * second;
+}
+
+double divide(double first, double second) {
+    return first / second;
+}
+
+int calculateModulus(int first, int second) {
+    return first % second;
+}
+
+double exponentiate(double base, double exponent) {
+    return pow(base, exponent);
+}
+
+void displayMenu() {
+    cout << "\n============================" << endl;
+    cout << "     SIMPLE CALCULATOR" << endl;
+    cout << "============================" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Division" << endl;
+    cout << "5. Modulus" << endl;
+    cout << "6. Exponentiation" << endl;
+    cout << "7. Quit" << endl;
+    cout << "Select an operation (1-7): ";
+}
+
+int main() {
+    int choice;
+
+    cout << fixed << setprecision(2);
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Error: Please select a number from 1 to 7." << endl;
+            continue;
+        }
+
+        if (choice == 7) {
+            cout << "Goodbye!" << endl;
+            break;
+        }
+
+        if (choice < 1 || choice > 7) {
+            cout << "Error: Please select a number from 1 to 7." << endl;
+            continue;
+        }
+
+        if (choice == 5) {
+            int first;
+            int second;
+
+            cout << "Enter first number : ";
+            cin >> first;
+            cout << "Enter second number: ";
+            cin >> second;
+
+            if (second == 0) {
+                cout << "Error: Cannot perform modulus by zero." << endl;
+            } else {
+                cout << "Result: " << first << " % " << second << " = " << calculateModulus(first, second) << endl;
+            }
+
+            continue;
+        }
+
+        double first;
+        double second;
+        double result;
+        char symbol;
+
+        cout << "Enter first number : ";
+        cin >> first;
+        cout << "Enter second number: ";
+        cin >> second;
+
+        if (choice == 1) {
+            result = add(first, second);
+            symbol = '+';
+        } else if (choice == 2) {
+            result = subtract(first, second);
+            symbol = '-';
+        } else if (choice == 3) {
+            result = multiply(first, second);
+            symbol = '*';
+        } else if (choice == 4) {
+            if (second == 0) {
+                cout << "Error: Cannot divide by zero." << endl;
+                continue;
+            }
+            result = divide(first, second);
+            symbol = '/';
+        } else {
+            result = exponentiate(first, second);
+            symbol = '^';
+        }
+
+        cout << "Result: " << first << " " << symbol << " " << second << " = " << result << endl;
+    }
+
+    return 0;
+}

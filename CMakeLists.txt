@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(programming_fundamentals_assignment_2)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(prime_checker assignment_01_prime_checker.cpp)
+add_executable(student_grade_system assignment_02_student_grade_system.cpp)
+add_executable(array_statistics assignment_03_array_statistics.cpp)
+add_executable(matrix_operations assignment_04_matrix_operations.cpp)
+add_executable(fibonacci_sequence assignment_05_fibonacci_sequence.cpp)
+add_executable(multiplication_table assignment_06_multiplication_table.cpp)
+add_executable(todo_list assignment_07_todo_list.cpp)
+add_executable(student_records assignment_08_student_records.cpp)
+add_executable(simple_calculator assignment_09_simple_calculator.cpp)
